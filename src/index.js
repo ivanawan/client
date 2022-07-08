@@ -16,6 +16,7 @@ import Cart from "./page/Cart";
 import AddBook from "./page/AddBook";
 import Complain from "./page/Complain";
 import { Isadmin, Islogin,Logout,Admin } from "./component/privateRoute";
+import EditProfile from "./page/EditProfile";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -36,6 +37,7 @@ root.render(
               <Route path="/cart" element={<Islogin><Cart /></Islogin>} />
               <Route path="/add-book" element={<Isadmin><AddBook /></Isadmin>} />
               <Route path="/complain" element={<Islogin><Complain /></Islogin>} />
+              <Route path="/edit" element={<Islogin><EditProfile/></Islogin>} />
               <Route path="/logout" element={<Logout />} />
             </Routes>
           </BrowserRouter>

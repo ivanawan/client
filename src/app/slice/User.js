@@ -2,10 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState={
     login:false,
+    id:0,
     fullName:"",
     email:"",
     status:"",
-    token:""
+    token:"",
+    image:""
 }
 
 const userSlice= createSlice({
@@ -19,6 +21,8 @@ const userSlice= createSlice({
         state.fullName=data.fullName;
         state.email=data.email;
         state.token=data.token;
+        state.image=data.image;
+        state.id=data.id
     },
     userlogout(state){
         state.login=false;
@@ -26,6 +30,7 @@ const userSlice= createSlice({
         state.email="";
         state.status="";
         state.token="";
+        state.id=0;
     }
  }
 });

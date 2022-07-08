@@ -14,6 +14,7 @@ const ListTransaction = () => {
   });
 check(data);
 
+
 function textcolor(item){
 if(item ==="Approve"){
   return "text-green-400";
@@ -48,7 +49,7 @@ if(item === "Pending"){
       </tr>
     </thead>
     <tbody>
-    {data?.data.data.transactions.map(item=>
+    {data?.data.data?.transactions.map(item=>
       <tr key={item.id}>
         <th>{item.id}</th>
         <td>{item.User.fullName}</td>
