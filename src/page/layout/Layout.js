@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { userAdd } from "../../app/slice/User";
 import { check } from "../../component/check";
 import axios from "../../component/axios";
-import { useMutation } from "react-query";
+
 
 function Layout(props) {
   const [login, setLogin] = useState({ email: "", password: "" });
@@ -18,7 +18,7 @@ function Layout(props) {
   const dispatch = useDispatch();
 
   async function submitLogin() {
-    await axios.post("/auth/login", login).then((res) => {
+    await axios.post("/api/v1/auth/login", login).then((res) => {
       check(res);
       const user = res.data.data.user;
       dispatch(
@@ -37,7 +37,7 @@ function Layout(props) {
   }
 
   async function submitRegister() {
-    await axios.post("/auth/register", register).then((res) => {
+    await axios.post("/api/v1/auth/register", register).then((res) => {
       check(res);
       const user = res.data.data.user;
       dispatch(
@@ -52,6 +52,7 @@ function Layout(props) {
         })
       );
     });
+    
     window.location.href = "/";
   }
 

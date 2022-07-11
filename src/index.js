@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { store, persistor } from "./app/store";
 import { PersistGate } from "redux-persist/integration/react";
-import { QueryClient, QueryClientProvider, useMutation } from "react-query";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import "./page/css/index.css";
@@ -37,7 +37,7 @@ root.render(
               <Route path="/cart" element={<Islogin><Cart /></Islogin>} />
               <Route path="/add-book" element={<Isadmin><AddBook /></Isadmin>} />
               <Route path="/complain" element={<Islogin><Complain /></Islogin>} />
-              <Route path="/edit" element={<Islogin><EditProfile/></Islogin>} />
+              <Route path="/edit-profil" element={<Islogin><EditProfile/></Islogin>} />
               <Route path="/logout" element={<Logout />} />
             </Routes>
           </BrowserRouter>

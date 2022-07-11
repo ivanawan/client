@@ -1,17 +1,24 @@
 import React from 'react';
 import { useQuery } from 'react-query';
-import { useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 import axios from '../component/axios';
 import { check } from '../component/check';
 import Layout from './layout/Layout';
 
 const Profil = () => {
-   const user = useSelector(state=>state.user);
+  
+   let user = useSelector(state=>state.user);
    axios.defaults.headers.common['Authorization'] = `Bearer ${user.token}`;
    const {data}=useQuery('profil', async ()=>{
-    return await axios.get(`/auth/profile`);
+    return await axios.get("/api/v1/auth/profile");
   });
 check(data);
+// if(data?.data.data.Profil.avatar  !== null && data?.data.data.Profil.avatar !== user.image){
+  // console.log("change image");
+  // console.log(user);
+  // user.image=data?.data.data.Profil.avatar;
+  // console.log(user.image ,"====",data?.data.data.Profil.avatar);
+// }
 
     return (
         <Layout>
@@ -58,18 +65,22 @@ check(data);
         
             <div>
                 <img src={data?.data.data.Profil.avatar ? `http://${window.location.hostname}:5000/public/image/${data?.data.data.Profil.avatar}`:"/201025-M-AB981-003.jpeg"} className='h-48 object-cover w-48' alt="" />
-                <button className=' bg-red-600 text-white w-full mt-4 p-1 rounded'>Edit Profile</button>
+                <a href='/edit-profil' className=' bg-red-600 text-white text-center inline-block w-full mt-4 p-1 rounded'>Edit Profile</a>
             </div>
 
            </div>
            <p className=' card-title mt-10 mb-10'>My Book</p>
            <div className=' grid grid-cols-4 mt-5  gap-16'>
-           {data?.data.data.Profil?.PurchasesBooks.map(item=>
-  <div className='w-40 '>
+           {data?.data.data.Profil?.PurchasesBooks.map((item,index)=>
+  <div className='w-40 ' key={index}>
+    <a href={`/detail/${item.BookId}`}>
   <img src={`http://${window.location.hostname}:5000/public/upload/${item.Book.thumbnail}`} className=' aspect-[9/16]  w-[9.8rem] h-[14rem] object-cover' alt="sampul" />
+    </a>
+    <a href={`/detail/${item.BookId}`}>
   <p className='  text-lg font-bold mt-1'>{item.Book.title}</p>
+    </a>
   <p className=' text-sm text-slate-400'>by {item.Book.author}</p>
-<button className=' w-full bg-slate-700 text-white mt-2'>Download</button>
+<a href={`http://${window.location.hostname}:5000/book/${user.id}/${item.BookId}`} className=' text-center inline-block w-full bg-slate-700 text-white mt-2'>Download</a>
   </div>
       )}
   </div>

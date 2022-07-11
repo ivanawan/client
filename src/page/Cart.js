@@ -39,7 +39,7 @@ const Cart = () => {
     function submit() {
       
         const bookId = cart.map(a => a.id);
-        axios.post('/transaction/',{ totalPayment:totalPrice,dataBook:bookId}).then(res=>{
+        axios.post('/api/v1/transaction/',{ totalPayment:totalPrice,dataBook:bookId}).then(res=>{
             check(res);  
             dispatch(clearItem());
             window.snap.pay((res.data.data.transaction.payment.token), {
@@ -67,6 +67,19 @@ const Cart = () => {
         })
     }
   
+    
+    function formatUang(bilangan){
+        let	number_string = bilangan.toString();
+        let sisa 	= number_string.length % 3;
+          let rupiah 	= number_string.substr(0, sisa);
+        let	ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
+              
+      if (ribuan) {
+       let	separator = sisa ? '.' : '';
+          rupiah += separator + ribuan.join('.');
+      }
+       return rupiah;
+        }
 
     return (
         <Layout>
@@ -86,7 +99,7 @@ const Cart = () => {
                         <div>
                             <p className=' font-bold'>{item.title}</p>
                             <p className=' text-sm text-slate-400'>by {item.author}</p>
-                             <p className='  text-lime-500 mt-12'>Rp. {item.price}</p>
+                             <p className='  text-lime-500 mt-12'>Rp. {formatUang(item.price)}</p>
                         </div>
                         </div>
                          <img src="/trash.png" onClick={()=>{deleteItemFromCart(item.id)}} className='h-5 w-5 mr-2 mt-2' alt="" />
@@ -98,7 +111,7 @@ const Cart = () => {
                     <hr />
                     <div className='flex justify-between mt-2'>
                         <p>Subtotal</p>
-                        <p>{totalPrice}</p>
+                        <p>{formatUang(totalPrice)}</p>
                     </div>
                     <div className='flex justify-between mt-2 mb-2'>
                         <p>Qty</p>
@@ -107,7 +120,7 @@ const Cart = () => {
                     <hr />
                     <div className='flex justify-between text-lime-500 mt-2'>
                         <p>Total</p>
-                        <p>{totalPrice}</p>
+                        <p>{formatUang(totalPrice)}</p>
                     </div>
                     <button onClick={()=> submit()} className=' mt-10 bg-slate-900 text-white w-full rounded p-1'>Pay</button>
                     </div>

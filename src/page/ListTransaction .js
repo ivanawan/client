@@ -10,7 +10,7 @@ const ListTransaction = () => {
   const user = useSelector((state)=>state.user);
   axios.defaults.headers.common['Authorization'] = `Bearer ${user.token}`;
   const {data}=useQuery('transaction', async ()=>{
-    return await axios.get("/transaction");
+    return await axios.get("/api/v1/transaction");
   });
 check(data);
 
@@ -28,6 +28,19 @@ if(item === "Pending"){
   return "text-yellow-500";
 }
 }
+
+function formatUang(bilangan){
+  let	number_string = bilangan.toString();
+  let sisa 	= number_string.length % 3;
+	let rupiah 	= number_string.substr(0, sisa);
+  let	ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
+		
+if (ribuan) {
+ let	separator = sisa ? '.' : '';
+	rupiah += separator + ribuan.join('.');
+}
+ return rupiah;
+  }
 
     return (
         <Layout>
@@ -55,7 +68,7 @@ if(item === "Pending"){
         <td>{item.User.fullName}</td>
         <td className=' text-sky-600'>{item.attachment}</td>
         <td>{item.Purchases[0].Book.title}</td>
-        <td className={item.status === "Approve" ? "text-green-400":" text-rose-500"}>Rp. {item.totalPayment}</td>
+        <td className={item.status === "Approve" ? "text-green-400":" text-rose-500"}>Rp. {formatUang(item.totalPayment)}</td>
         <td className={textcolor(item.status)}>{item.status}</td>
       </tr>
         )}
