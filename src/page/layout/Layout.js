@@ -87,7 +87,11 @@ function Layout(props) {
                   <label tabIndex="0">
                     <a className="mr-14 hover:bg-none">
                       <img
-                        src={user.image ? `http://${window.location.hostname}:5000/public/image/${user.image}`:"/201025-M-AB981-003.jpeg"}
+                        src={
+                          user.image
+                            ? `${process.env.REACT_APP_URL}/public/image/${user.image}`
+                            : "/201025-M-AB981-003.jpeg"
+                        }
                         className="h-12 w-12 object-cover rounded-full"
                         alt=""
                       />
