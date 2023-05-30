@@ -183,7 +183,7 @@ function PromoBook() {
   return (
     <div className=" grid grid-flow-col  grid-cols-3 overflow-x-auto mx-8 gap-8 scrollbar ">
       {data?.data.data.promoBooks.map((item) => (
-        <div className="flex  w-96 h-56 " key={item.id}>
+        <div className="flex  w-96 h-56 relative" key={item.id}>
           <img
             src={`${process.env.REACT_APP_URL}/public/upload/${item.thumbnail}`}
             className=" aspect-[9/16] w-[40%] object-cover"
